@@ -3,6 +3,34 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="/beach/links_beach.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/beach/logs.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/business/links_business.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/flower/links_flower.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/info.csv">
           <value>
             <Attribute>
@@ -11,6 +39,13 @@
           </value>
         </entry>
         <entry key="/links_.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/links_business.csv">
           <value>
             <Attribute>
               <option name="separator" value=":" />
@@ -46,6 +81,20 @@
           </value>
         </entry>
         <entry key="/love/logs.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/wallpaper/links_wallpaper.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/wallpaper/logs.csv">
           <value>
             <Attribute>
               <option name="separator" value=";" />

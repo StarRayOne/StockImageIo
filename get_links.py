@@ -12,12 +12,18 @@ import lxml
 from playwright.sync_api import Playwright, sync_playwright, expect
 import asyncio
 from multiprocessing import Process
+import os
+
 all_links = []
-section = 'love'
+section = input('Введите название категории из которой будем парсить ссылки: ')
+os.mkdir(f'{section}')
+os.mkdir(f'{section}/main_{section}')
+os.mkdir(f'{section}/preview_{section}')
+
 def get_images():
     with webdriver.Chrome() as browser:
         actions = ActionChains(browser)
-        browser.get('https://stocksnap.io/search/love')
+        browser.get(f'https://stocksnap.io/search/{section}')
         time.sleep(1)
         while True:
             try:
@@ -33,9 +39,11 @@ def get_images():
                 all_links.extend(links)
                 break
 
+
 get_images()
-with open(f'links_{section}.csv', 'w', newline='') as file:
+with open(f'{section}/links_{section}.csv', 'w', newline='') as file:
     writer = csv.writer(file, delimiter=';')
     writer.writerow(['link'])
     for link in all_links:
         writer.writerow([link])
+    print(f'Сохранили {len(all_links)} ссылок!')
