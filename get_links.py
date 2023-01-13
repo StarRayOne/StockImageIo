@@ -30,7 +30,7 @@ def get_images():
                 load = browser.find_element(By.CLASS_NAME, 'load-more-photos')
                 actions.move_to_element(load).perform()
                 browser.refresh()
-                time.sleep(1)
+                time.sleep(3)
             except:
                 time.sleep(3)
                 page = browser.page_source

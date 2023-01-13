@@ -12,11 +12,19 @@ import lxml
 from playwright.sync_api import Playwright, sync_playwright, expect
 import asyncio
 from multiprocessing import Process
-section = 'love'
+section = 'flower'
 fake_head = {
     "user-agent": 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'}
 all_links = []
 
+proxy_req = {
+    'http' : 'http://bQ7pdR:EyJGTv@185.202.2.152:8000'
+}
+proxy_play = {
+  "server": "http://185.202.2.152:8000",
+  "username": "bQ7pdR",
+  "password": "EyJGTv"
+}
 with open(f'{section}/links_{section}.csv', 'r', newline='') as file:
     reader = csv.DictReader(file, delimiter=';')
     for row in reader:
@@ -34,21 +42,46 @@ with open(f'{section}/logs.csv', 'w', newline='') as file:
 
 def download1():
     count = 1
-    for link in all_links[:50]:
-        from playwright.sync_api import Playwright, sync_playwright, expect
-
+    for link in all_links[:500]:
         def run(playwright: Playwright) -> None:
-            browser = playwright.chromium.launch(headless=False)
-            context = browser.new_context()
-            page = context.new_page()
-            page.goto("https://stocksnap.io/search/beach")
+            browser1 = playwright.chromium.launch(headless=False, proxy=proxy_play)
+            context1 = browser1.new_context()
+            page = context1.new_page()
+            try:
+                page.goto(link, timeout=2800)
+            except:
+                try:
+                    # функция скачивания
+                    with page.expect_download() as download_info:
+                        page.get_by_role("button", name="Free Download").click()
+                    download = download_info.value
+                    download.save_as(f'{section}/main_{section}/{section}_{count}.jpg')
+                    # функция парсинга страницы
+                    htmlcode = page.inner_html('html')
+                    soup = BeautifulSoup(htmlcode, 'lxml')
+                    preview = soup.find('figure', itemprop="image").find('img')['src']
+                    download_preview = requests.get(url=preview, stream=True, headers=fake_head, proxies=proxy_req)
+                    with open(f'{section}/preview_{section}/preview_{section}_{count}.jpg', 'wb') as prew:
+                        prew.write(download_preview.content)
+                    name = soup.find('h1').find('span').text.replace(' Free Stock Image', '')
+                    tags = [tag.text for tag in
+                            soup.find(class_="photo-tags").find(itemprop='keywords').find_all('a')]
+                    resolution = \
+                        [res.find('span').text for res in soup.find(class_="stats clearfix").find_all('li')][4]
+                    with open(f'{section}/info.csv', 'a', newline='') as file:
+                        writer = csv.writer(file, delimiter=';')
+                        writer.writerow([count, link, name, tags, resolution])
+                except:
+                    with open(f'{section}/logs.csv', 'a', newline='') as file:
+                        writer = csv.writer(file, delimiter=';')
+                        writer.writerow([count, link])
 
             # ---------------------
-            context.close()
-            browser.close()
+            context1.close()
+            browser1.close()
 
         with sync_playwright() as playwright:
             run(playwright)
-
-
+        count += 1
+    print('Скачивание потока 1 закончили!')
 download1()

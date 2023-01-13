@@ -23,6 +23,9 @@ proxy_play = {
   "username": "bQ7pdR",
   "password": "EyJGTv"
 }
+proxy_req = {
+    'http' : 'http://bQ7pdR:EyJGTv@185.202.2.152:8000'
+}
 # чтение ссылок и создание файлов
 with open(f'{section}/links_{section}.csv', 'r', newline='') as file:
     reader = csv.DictReader(file, delimiter=';')
@@ -45,7 +48,7 @@ def multi_downloads():
 
     def download1():
         count = 1
-        for link in all_links[:500]:
+        for link in all_links[:583]:
             def run(playwright: Playwright) -> None:
                 browser1 = playwright.chromium.launch(headless=False)
                 context1 = browser1.new_context()
@@ -90,8 +93,8 @@ def multi_downloads():
         print("--- %s секунд ---" % (time.time() - start_time))
 
     def download2():
-        count = 500
-        for link in all_links[499:1000]:
+        count = 583
+        for link in all_links[582:1166]:
             def run(playwright: Playwright) -> None:
                 browser1 = playwright.chromium.launch(headless=False)
                 context1 = browser1.new_context()
@@ -136,8 +139,8 @@ def multi_downloads():
         print("--- %s секунд ---" % (time.time() - start_time))
 
     def download3():
-        count = 1000
-        for link in all_links[999:1500]:
+        count = 1166
+        for link in all_links[1165:1749]:
             def run(playwright: Playwright) -> None:
                 browser1 = playwright.chromium.launch(headless=False)
                 context1 = browser1.new_context()
@@ -182,14 +185,14 @@ def multi_downloads():
         print("--- %s секунд ---" % (time.time() - start_time))
 
     def download4():
-        count = 1500
-        for link in all_links[1499:2000]:
+        count = 1749
+        for link in all_links[1748:2332]:
             def run(playwright: Playwright) -> None:
-                browser1 = playwright.chromium.launch(headless=False, proxy=proxy_play)
+                browser1 = playwright.chromium.launch(headless=False)
                 context1 = browser1.new_context()
                 page = context1.new_page()
                 try:
-                    page.goto(link, timeout=2800)
+                    page.goto(link, timeout=3200)
                 except:
                     try:
                         # функция скачивания
@@ -228,14 +231,14 @@ def multi_downloads():
         print("--- %s секунд ---" % (time.time() - start_time))
 
     def download5():
-        count = 2000
-        for link in all_links[1999:2500]:
+        count = 2332
+        for link in all_links[2331:2915]:
             def run(playwright: Playwright) -> None:
-                browser1 = playwright.chromium.launch(headless=False,  proxy=proxy_play)
+                browser1 = playwright.chromium.launch(headless=False)
                 context1 = browser1.new_context()
                 page = context1.new_page()
                 try:
-                    page.goto(link, timeout=2800)
+                    page.goto(link, timeout=3200)
                 except:
                     try:
                         # функция скачивания
@@ -273,14 +276,14 @@ def multi_downloads():
         print('Скачивание потока 5 закончили!')
         print("--- %s секунд ---" % (time.time() - start_time))
     def download6():
-        count = 2500
-        for link in all_links[2499:]:
+        count = 2915
+        for link in all_links[2914:]:
             def run(playwright: Playwright) -> None:
                 browser1 = playwright.chromium.launch(headless=False,  proxy=proxy_play)
                 context1 = browser1.new_context()
                 page = context1.new_page()
                 try:
-                    page.goto(link, timeout=2800)
+                    page.goto(link, timeout=3200)
                 except:
                     try:
                         # функция скачивания
@@ -315,7 +318,7 @@ def multi_downloads():
             with sync_playwright() as playwright:
                 run(playwright)
             count += 1
-        print('Скачивание потока 5 закончили!')
+        print('Скачивание потока 6 закончили!')
         print("--- %s секунд ---" % (time.time() - start_time))
 
     Process(target=download1).start()
